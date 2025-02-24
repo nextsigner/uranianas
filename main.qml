@@ -27,7 +27,7 @@ ApplicationWindow{
             anchors.centerIn: parent
             Text{
                 id: txt1
-                text:  'Presioná la tecla Enter'
+                text:  'Presioná la tecla Enter...'
                 color: 'white'
                 font.pixelSize: app.fs*0.8
                 width: parent.width-app.fs
