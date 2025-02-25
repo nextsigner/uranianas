@@ -1,1 +1,1 @@
-Se elimina mainZooland.qml
+Se hace ln a main.qml y mainZooland.qml
