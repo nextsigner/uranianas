@@ -1,1 +1,1 @@
-Se agrega timer tResize
+Se elimina mainZooland.qml
