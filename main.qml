@@ -39,7 +39,7 @@ ApplicationWindow{
     }
     Component.onCompleted: {
         app.requestActivate()
-        let fd=unik.getFile('/home/ns/nsp/uranianas/m1.txt')
+        let fd=unik.getFile('./m1.txt')
         app.aCartas=fd.split('\n')
     }
     Shortcut{
