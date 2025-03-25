@@ -2,6 +2,8 @@ import QtQuick 2.12
 import QtQuick.Controls 2.0
 import QtQuick.Window 2.0
 
+import NodeIOQml 1.1
+
 ApplicationWindow{
     id: app
     visible: true
@@ -14,54 +16,47 @@ ApplicationWindow{
     property var aCartas: []
     property var aCartasMostradas: []
 
+    NodeIOQml{
+        id: niosc
+        user: 'nioq'
+        host: '192.168.1.50'
+        port: 8000
+        onDataReceibed:{
+            //console.log('DataReceibed: '+data)
+            let j=JSON.parse(data)
+            console.log('DataReceibed: '+data)
+            l.text+=data+'\n'
+
+        }
+
+
+
+    }
+
     Item{
         id: xApp
         anchors.fill: parent
-        Rectangle{
-            id: xTxt
-            width: parent.width-app.fs*2//app.fs*6
-            height: parent.height-app.fs*2//app.fs*10
-            color: 'black'
-            border.width: 2
-            border.color: 'white'
-            radius: app.fs*0.5
-            anchors.centerIn: parent
-            visible: !tResize.running
-            Behavior on opacity {NumberAnimation{id: na; duration: 500}}
-            onVisibleChanged: {
-                if(visible){
-                    na.duration=2500
-                    opacity=1.0
-                }else{
-                    na.duration=0
-                    opacity=0.0
-                }
-            }
+        Flickable{
+            id: flk
+            anchors.fill: parent
+            contentWidth: parent.width
+            contentHeight: l.contentHeight+100
             Text{
-                id: txt1
-                text:  'Presioná la tecla Enter'
+                id: l
+                width: parent.width
+                font.pixelSize: 30
                 color: 'white'
-                font.pixelSize: app.fs*0.8
-                width: parent.width-app.fs
                 wrapMode: Text.WordWrap
-                horizontalAlignment: Text.AlignHCenter
-                anchors.centerIn: parent
-            }
-            Timer{
-                id: tResize
-                running: txt1.contentHeight>xTxt.height-app.fs || txt1.contentWidth>xTxt.width-app.fs
-                repeat: true
-                interval: 50
-                onTriggered: {
-                    txt1.font.pixelSize-=app.fs*0.1
+                onTextChanged: {
+                    flk.contentY=l.contentHeight-flk.height
                 }
             }
         }
     }
     Component.onCompleted: {
         app.requestActivate()
-        let fd=unik.getFile('./m1.txt')
-        app.aCartas=fd.split('\n')
+        // let fd=unik.getFile('./m1.txt')
+        //app.aCartas=fd.split('\n')
     }
     Shortcut{
         sequence: 'Esc'
@@ -92,6 +87,6 @@ ApplicationWindow{
 
     }
     function aleatorio(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
+        return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 }

@@ -1,1 +1,1 @@
-Se hace ln a main.qml y mainZooland.qml
+Se prueba NodeIOQml 1
